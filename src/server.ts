@@ -1,6 +1,8 @@
 import fastify from "fastify"
+import { PrismaClient } from '@prisma/client'
 
 const app = fastify()
+const prisma = new PrismaClient()
 
 // GET - listar
 // POST - criar
@@ -8,8 +10,9 @@ const app = fastify()
 // PATCH - atualizar uma informação específica
 // DELETE - excluir
 
-app.get('/hello', () => {
-    return 'Hello World'
+app.get('/users', async () => {
+    const users = await prisma.user.findMany()
+    return users
 })
 
 app.listen({
